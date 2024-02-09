@@ -47,11 +47,10 @@ const MainLayout = () => {
         <div
           style={{
             color: 'white',
-            textAlign: 'center',
             height: '4rem',
             display: 'flex',
             justifyContent: 'center',
-            justifyItems: 'center',
+            alignItems: 'center',
           }}
         >
           <h1>PH Uni</h1>
