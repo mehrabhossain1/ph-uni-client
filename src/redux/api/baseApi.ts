@@ -17,7 +17,19 @@ const baseQuery = fetchBaseQuery({
 
 const baseQueryWithRefreshToken = async (args, api, extraOptions) => {
   const result = await baseQuery(args, api, extraOptions);
-  console.log(result);
+
+  if (result.error?.status === 401) {
+    console.log('Sending refresh token');
+
+    const res = await fetch('http://localhost:5000/api/v1/auth/refresh-token', {
+      method: 'POST',
+      credentials: 'include',
+    });
+
+    const data = await res.json();
+
+    console.log(data);
+  }
 };
 
 export const baseApi = createApi({
