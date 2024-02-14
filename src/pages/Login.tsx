@@ -6,6 +6,7 @@ import { TUser, setUser } from '../redux/features/auth/authSlice';
 import { verifyToken } from '../utils/verifyToken';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
+import PHForm from '../components/form/PHForm';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -22,29 +23,30 @@ const Login = () => {
   const [login] = useLoginMutation();
 
   const onSubmit = async (data: FieldValues) => {
-    const toastId = toast.loading('Logging in');
-    try {
-      const userInfo = {
-        id: data.id,
-        password: data.password,
-      };
+    console.log(data);
+    // const toastId = toast.loading('Logging in');
+    // try {
+    //   const userInfo = {
+    //     id: data.id,
+    //     password: data.password,
+    //   };
 
-      const res = await login(userInfo).unwrap();
+    //   const res = await login(userInfo).unwrap();
 
-      const user = verifyToken(res.data.accessToken) as TUser;
+    //   const user = verifyToken(res.data.accessToken) as TUser;
 
-      dispatch(setUser({ user: user, token: res.data.accessToken }));
+    //   dispatch(setUser({ user: user, token: res.data.accessToken }));
 
-      navigate(`/${user.role}/dashboard`);
+    //   navigate(`/${user.role}/dashboard`);
 
-      toast.success('Logged in success', { id: toastId });
-    } catch (err) {
-      toast.error('Something went wrong', { id: toastId });
-    }
+    //   toast.success('Logged in success', { id: toastId });
+    // } catch (err) {
+    //   toast.error('Something went wrong', { id: toastId });
+    // }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <PHForm onSubmit={onSubmit}>
       <div>
         <label htmlFor="id">ID:</label>
         <input type="text" id="id" {...register('id')} />
@@ -56,7 +58,7 @@ const Login = () => {
       <Button htmlType="submit" type="primary">
         Login
       </Button>
-    </form>
+    </PHForm>
   );
 };
 
